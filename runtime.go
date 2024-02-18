@@ -554,7 +554,7 @@ func SafeScript(functionName string, params ...any) string {
 	sb := new(strings.Builder)
 	sb.WriteString(functionName)
 	sb.WriteRune('(')
-	sb.WriteString(strings.Join(encodedParams, ","))
+	sb.WriteString(strings.Join(append(encodedParams, "event"), ","))
 	sb.WriteRune(')')
 	return sb.String()
 }
@@ -565,7 +565,7 @@ func SafeScriptInline(functionName string, params ...any) string {
 	sb := new(strings.Builder)
 	sb.WriteString(functionName)
 	sb.WriteRune('(')
-	sb.WriteString(strings.Join(encodedParams, ","))
+	sb.WriteString(strings.Join(append(encodedParams, "event"), ","))
 	sb.WriteRune(')')
 	return sb.String()
 }

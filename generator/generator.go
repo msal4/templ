@@ -1423,7 +1423,12 @@ func (g *generator) writeScript(t parser.ScriptTemplate) error {
 			return err
 		}
 		// Function: `function scriptName(a, b, c){` + `constantScriptValue` + `}`,
-		prefix := "function " + fn + "(" + stripTypes(t.Parameters.Value) + "){"
+		params := stripTypes(t.Parameters.Value)
+		if len(params) > 0 {
+			params += ","
+		}
+		params += "$event"
+		prefix := "function " + fn + "(" + params + "){"
 		body := strings.TrimLeftFunc(t.Value, unicode.IsSpace)
 		suffix := "}"
 		if _, err = g.w.WriteIndent(indentLevel, "Function: "+createGoString(prefix+body+suffix)+",\n"); err != nil {
